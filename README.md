@@ -1,6 +1,4 @@
-# BigDataProgramming
-## Microservice- und Sidecar-Projekt
-
+# BigDataProgramming 3706017
     |flask-service/
     |   |app.py
     |   |requirements.txt
