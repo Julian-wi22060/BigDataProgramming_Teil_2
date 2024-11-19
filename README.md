@@ -2,17 +2,17 @@
 ## Microservice- und Sidecar-Projekt
 
     |flask-service/
-    |   |app.py                    # Flask-Microservice Code
-    |   |requirements.txt          # Abhängigkeiten für den Flask-Service
-    |   |Dockerfile                # Dockerfile für den Flask-Service
-    |   |README.md                 # Dokumentation zum Flask-Service
+    |   |app.py
+    |   |requirements.txt
+    |   |Dockerfile
+    |   |README.md
     |   |tests/
-    |       |test_app.py           # Tests für den Flask-Service
+    |       |test_app.py
     |sidecar/
-    |   |envoy-config.yaml         # Konfigurationsdatei für das Sidecar (Envoy, Traefik, etc.)
-    |docker-compose.yml            # Docker-Compose-Datei für beide Container
-    |.gitignore                    # Ignorieren von unnötigen Dateien in Git (z. B. __pycache__)
-    |README.md                     # Hauptdokumentation für das gesamte Projekt
+    |   |envoy-config.yaml
+    |docker-compose.yml
+    |.gitignore
+    |README.md
 
 ### Ziel
 Dieses Projekt demonstriert einen einfachen Flask-Microservice, der mit einem Envoy-Sidecar kombiniert wird. Das Sidecar dient als Reverse Proxy und bietet Routing- und Monitoring-Funktionen.
