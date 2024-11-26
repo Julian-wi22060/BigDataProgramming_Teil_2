@@ -1,45 +1,116 @@
-# BigDataProgramming
+# BigDataProgramming Teil 2 (3706017)
 ## Microservice- und Sidecar-Projekt
+```
+flask-service/
+  ├── app.py               # Flask-Microservice
+  ├── Dockerfile           # Dockerfile für Flask-Microservice
+  └── requirements.txt     # Python-Abhängigkeiten für Flask-Microservice
 
-    |flask-service/
-    |   |app.py                    # Flask-Microservice Code
-    |   |requirements.txt          # Abhängigkeiten für den Flask-Service
-    |   |Dockerfile                # Dockerfile für den Flask-Service
-    |   |README.md                 # Dokumentation zum Flask-Service
-    |   |tests/
-    |       |test_app.py           # Tests für den Flask-Service
-    |sidecar/
-    |   |envoy-config.yaml         # Konfigurationsdatei für das Sidecar (Envoy, Traefik, etc.)
-    |docker-compose.yml            # Docker-Compose-Datei für beide Container
-    |.gitignore                    # Ignorieren von unnötigen Dateien in Git (z. B. __pycache__)
-    |README.md                     # Hauptdokumentation für das gesamte Projekt
+nginx/
+  ├── Dockerfile           # Dockerfile für Nginx-Sidecar
+  └── nginx.conf           # Konfigurationsdatei für Nginx-Sidecar
 
-### Ziel
-Dieses Projekt demonstriert einen einfachen Flask-Microservice, der mit einem Envoy-Sidecar kombiniert wird. Das Sidecar dient als Reverse Proxy und bietet Routing- und Monitoring-Funktionen.
+docker-compose.yml         # Docker-Compose Datei für Flask-Microservice und Nginx-Sidecar
+README.md                  # Projektdokumentation
+```
 
 ### Inhalte
 - `flask-service`: Flask-Microservice mit `/data` und `/health` Endpunkten.
-- `sidecar`: Envoy-Konfiguration für das Routing zum Flask-Microservice.
+- `sidecar`: Nginx-Konfiguration für das Routing zum Flask-Microservice.
 - `docker-compose.yml`: Startet beide Services zusammen.
 
-### Schritte zur Ausführung
-1. **Build des Flask-Microservices:**
-   ```bash
-   cd flask-service
-   docker build -t flask-microservice .
-   docker run -p 1234:1234 flask-microservice
-2. **Gesamtes Projekt starten:**
-    ```bash
-    docker-compose up
-3. **Endpunkte testen:** <br>
+# Schritte zur Ausführung des Projekts
+
+### 1. Benutzerdefiniertes Netzwerk erstellen
+Bevor der Container gestartet wird, wird ein benutzerdefiniertes Docker-Netzwerk erstellt,
+damit die beiden Container miteinander kommunizieren können.
+
+```bash
+docker network create bigdataprogramming
+```
+
+### 2. Flask-Microservice bauen und starten
+Wechseln Sie in das Verzeichnis `flask-service/` und bauen Sie das Docker-Image:
+
+```bash
+cd flask-service
+docker build -t flask-microservice .
+```
+
+Starten Sie den Flask-Microservice im benutzerdefinierten Netzwerk:
+
+```bash
+docker run -d --network bigdataprogramming -p 1234:1234 --name flask-microservice flask-microservice
+```
+
+### 3. Nginx-Sidecar bauen und starten
+Nutzen Sie ggf. ein neues Terminal-Fenster. Wechseln Sie anschließend in das Verzeichnis `nginx/` und bauen Sie das Docker-Image:
+
+```bash
+cd ../nginx
+docker build -t nginx-sidecar .
+```
+
+Starten Sie das Nginx-Sidecar im benutzerdefinierten Netzwerk:
+
+```bash
+docker run -d --network bigdataprogramming -p 8080:8080 --name nginx-sidecar nginx-sidecar
+```
+
+### 4. Testen des Setups
+
+#### Direktzugriff auf den Flask-Microservice:
+Um zu überprüfen, ob der Flask-Service korrekt läuft, verwenden Sie den folgenden `curl`-Befehl:
+
+```bash
+curl -X GET http://localhost:1234/data
+```
+
+Die Antwort sollte sein:
+```json
+{"message": "Hello, World!"}
+```
+
+#### Zugriff über das Nginx-Sidecar:
+Um sicherzustellen, dass das Nginx-Sidecar Anfragen korrekt weiterleitet, verwenden Sie den folgenden `curl`-Befehl:
+
+```bash
+curl -X GET http://localhost:8080/data
+```
+
+Auch hier sollte die Antwort sein:
+```json
+{"message": "Hello, World!"}
+```
+
+*Hinweis: Statt dem Endpoint /data kann auch /health verwendet werden, um den Zustand des Servers zu überprüfen!*
+    
+### 5. Container stoppen
+Um die Container zu stoppen, können Sie folgende Befehle verwenden:
+
+```bash
+docker stop flask-microservice nginx-sidecar
+docker rm flask-microservice nginx-sidecar
+```
+
+## Verwendung von Docker Compose
+Alternativ können Sie das gesamte Setup auch mit Docker Compose starten,
+um beide Container gleichzeitig zu starten und zu verknüpfen.
+Im Hauptverzeichnis des Projekts finden Sie eine `docker-compose.yml` Datei.
+Sie können das Setup einfach mit folgendem Befehl starten:
+
+```bash
+docker-compose up
+```
+
+Docker Compose sorgt dafür, dass beide Container automatisch im gleichen Netzwerk gestartet werden.
+
+### Endpunkte testen:<br>
 - Über den `Flask-Service` direkt:
     ```bash
     curl -X GET http://localhost:1234/data
+    curl -X GET http://localhost:1234/health
 - Über das `Sidecar`:
     ```bash
     curl -X GET http://localhost:8080/data
-### Tests
-4. **Führen Sie die Tests für den Flask-Microservice mit pytest aus:**
-    ```bash
-    cd tests
-    pytest -v   # die Option -v ist optional und bietet eine detaillierte Ansicht der Testergebnisse
+    curl -X GET http://localhost:8080/health
