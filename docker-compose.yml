@@ -5,7 +5,7 @@ services:
     ports:
       - "1235:1234"   # Der Flask-Service wird auf Port 1235 des Hosts erreichbar gemacht
     networks:
-      - bigdataprogrammingCompose
+      - bigdataprogramming
 
   nginx-sidecar:
     build:
@@ -13,7 +13,7 @@ services:
     ports:
       - "8080:8080"  # Der Sidecar-Proxy ist auf Port 8080 erreichbar
     networks:
-      - bigdataprogrammingCompose
+      - bigdataprogramming
 
 networks:
   app-network:
