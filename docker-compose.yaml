@@ -1,11 +1,15 @@
+version: '3.9'
+
 services:
   flask-service:
     build:
       context: ./flask-service
     ports:
-      - "1235:1234"   # Der Flask-Service wird auf Port 1235 des Hosts erreichbar gemacht
+      - "1234:1234"   # Der Flask-Service wird auf Port 1234 des Hosts erreichbar gemacht
     networks:
-      - app-network
+      app-network:
+        aliases:
+          - flask-microservice  # Alias, damit der Dienst auch unter diesem Namen gefunden wird
 
   nginx-sidecar:
     build:

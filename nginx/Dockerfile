@@ -1,8 +1,5 @@
 FROM nginx:latest
 
-# Remove the standard-nginx-configuration
-RUN rm /etc/nginx/conf.d/default.conf
-
 # Copy the user defined nginx.conf into the container-directory
 COPY nginx.conf /etc/nginx/nginx.conf
 

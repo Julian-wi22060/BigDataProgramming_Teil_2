@@ -64,11 +64,13 @@ Um zu überprüfen, ob der Flask-Service korrekt läuft, verwenden Sie den folge
 
 ```bash
 curl -X GET http://localhost:1234/data
+curl -X GET http://localhost:1234/health
 ```
 
 Die Antwort sollte sein:
-```json
-{"message": "Hello, World!"}
+```md
+{"message":"Hello, World!"}
+{"status":"healthy"}
 ```
 
 #### Zugriff über das Nginx-Sidecar:
@@ -76,14 +78,14 @@ Um sicherzustellen, dass das Nginx-Sidecar Anfragen korrekt weiterleitet, verwen
 
 ```bash
 curl -X GET http://localhost:8080/data
+curl -X GET http://localhost:8080/health
 ```
 
 Auch hier sollte die Antwort sein:
-```json
-{"message": "Hello, World!"}
+```md
+{"message":"Hello, World!"}
+{"status":"healthy"}
 ```
-
-*Hinweis: Statt dem Endpoint /data kann auch /health verwendet werden, um den Zustand des Servers zu überprüfen!*
     
 ### 5. Container stoppen
 Um die Container zu stoppen, können Sie folgende Befehle verwenden:
@@ -107,10 +109,13 @@ Docker Compose sorgt dafür, dass beide Container automatisch im gleichen Netzwe
 
 ### Endpunkte in einem neuen Terminal testen:<br>
 - Über den `Flask-Service` direkt:
-    ```bash
-    curl -X GET http://localhost:1234/data
-    curl -X GET http://localhost:1234/health
+```bash
+curl -X GET http://localhost:1234/data
+curl -X GET http://localhost:1234/health
+```
+
 - Über das `Sidecar`:
-    ```bash
-    curl -X GET http://localhost:8080/data
-    curl -X GET http://localhost:8080/health
+```bash
+curl -X GET http://localhost:8080/data
+curl -X GET http://localhost:8080/health
+```
