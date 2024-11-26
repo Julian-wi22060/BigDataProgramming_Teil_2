@@ -105,7 +105,7 @@ docker-compose up
 
 Docker Compose sorgt dafür, dass beide Container automatisch im gleichen Netzwerk gestartet werden.
 
-### Endpunkte testen:<br>
+### Endpunkte in einem neuen Terminal testen:<br>
 - Über den `Flask-Service` direkt:
     ```bash
     curl -X GET http://localhost:1234/data
