@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Set working directory
-WORKDIR /main
+WORKDIR /app
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 1234
 
 # Command to run the application
-CMD ["python", "app.py"]
+CMD ["python", "main.py"]

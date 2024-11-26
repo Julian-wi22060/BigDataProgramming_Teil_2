@@ -97,7 +97,7 @@ docker rm flask-microservice nginx-sidecar
 Alternativ können Sie das gesamte Setup auch mit Docker Compose starten,
 um beide Container gleichzeitig zu starten und zu verknüpfen.
 Im Hauptverzeichnis des Projekts finden Sie eine `docker-compose.yml` Datei.
-Sie können das Setup einfach mit folgendem Befehl starten:
+Dort können Sie das Setup einfach mit folgendem Befehl starten:
 
 ```bash
 docker-compose up
