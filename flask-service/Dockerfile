@@ -14,5 +14,5 @@ COPY . .
 # Expose port 1234
 EXPOSE 1234
 
-# Command to run the application
+# Run the application
 CMD ["python", "main.py"]

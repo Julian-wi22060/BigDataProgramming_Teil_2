@@ -5,17 +5,17 @@ services:
     build:
       context: ./flask-service
     ports:
-      - "1234:1234"   # Der Flask-Service wird auf Port 1234 des Hosts erreichbar gemacht
+      - "1234:1234"   # Set external and internal ports 1234 for the flask server
     networks:
       app-network:
         aliases:
-          - flask-microservice  # Alias, damit der Dienst auch unter diesem Namen gefunden wird
+          - flask-microservice  # Alias to find the service with this name
 
   nginx-sidecar:
     build:
       context: ./nginx
     ports:
-      - "8080:8080"  # Der Sidecar-Proxy ist auf Port 8080 erreichbar
+      - "8080:8080"  # Set external and internal ports 8080 for the sidecar-proxy
     networks:
       - app-network
 
