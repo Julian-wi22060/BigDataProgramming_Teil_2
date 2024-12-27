@@ -1,17 +1,17 @@
 # BigDataProgramming Teil 2 (3706017)
-## Microservice- und Sidecar-Projekt
+## Microservice und Sidecar: Projektstruktur
 ```
 flask-service/
-  ├── app.py               # Flask-Microservice
-  ├── Dockerfile           # Dockerfile für Flask-Microservice
-  └── requirements.txt     # Python-Abhängigkeiten für Flask-Microservice
+  ├── app.py
+  ├── Dockerfile
+  └── requirements.txt
 
 nginx/
-  ├── Dockerfile           # Dockerfile für Nginx-Sidecar
-  └── nginx.conf           # Konfigurationsdatei für Nginx-Sidecar
+  ├── Dockerfile
+  └── nginx.conf
 
-docker-compose.yml         # Docker-Compose Datei für Flask-Microservice und Nginx-Sidecar
-README.md                  # Projektdokumentation
+docker-compose.yml
+README.md
 ```
 
 ### Inhalte
@@ -44,10 +44,10 @@ docker run -d --network bigdataprogramming -p 1234:1234 --name flask-microservic
 ```
 
 ### 3. Nginx-Sidecar bauen und starten
-Nutzen Sie ggf. ein neues Terminal-Fenster. Wechseln Sie anschließend in das Verzeichnis `nginx/` und bauen Sie das Docker-Image:
+Nutzen Sie ggf. ein neues Terminal-Fenster. Wechseln Sie anschließend weider in das root-Verzeichnis und bauen Sie das Docker-Image:
 
 ```bash
-cd ../nginx
+cd nginx
 docker build -t nginx-sidecar .
 ```
 

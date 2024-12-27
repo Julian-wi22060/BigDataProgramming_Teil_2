@@ -6,7 +6,8 @@ app = Flask(__name__)
 def get_data():
     """
     Handle GET request to fetch sample data.
-    :return: JSON response with a greeting message
+    Responds with a greeting message
+    Returns: JSON
     """
     return jsonify({"message": "Hello, World!"})
 
@@ -14,7 +15,8 @@ def get_data():
 def health_check():
     """
     Perform a health check for the application.
-    :return: JSON response indicating health status
+    Responds with a health status message
+    Returns: JSON
     """
     return jsonify({"status": "healthy"})
 
