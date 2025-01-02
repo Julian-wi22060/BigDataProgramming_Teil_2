@@ -120,3 +120,10 @@ curl -X GET http://localhost:1234/health
 curl -X GET http://localhost:8080/data
 curl -X GET http://localhost:8080/health
 ```
+
+### Docker-Compose stoppen
+Um die Container zu stoppen, können Sie folgenden Befehl verwenden:
+
+```bash
+docker-compose down
+```
