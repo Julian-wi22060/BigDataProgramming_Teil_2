@@ -9,7 +9,8 @@ def get_data():
     Responds with a greeting message
     Returns: JSON
     """
-    return jsonify({"message": "Hello, World!"})
+    data = {"message": "Hello, World!"}
+    return jsonify(data)
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -18,7 +19,8 @@ def health_check():
     Responds with a health status message
     Returns: JSON
     """
-    return jsonify({"status": "healthy"})
+    health = {"status": "healthy"}
+    return jsonify(health)
 
 if __name__ == '__main__':
     # Run the Flask application server on host 0.0.0.0 and port 1234
